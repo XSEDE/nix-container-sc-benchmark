@@ -1,20 +1,39 @@
 with import <nixpkgs> {};
-#let
-#  osu-micro-benchmarks = stdenv.mkDerivation {
-#    name = "osu-micro-benchmarks";
-#    
-#    src = fetchurl {
-#      url = https://github.com/federatedcloud/osu-micro-benchmarks-5.6.2/releases/download/v5.6.2/osu-micro-benchmarks-5.6.2.tar.gz;
-#      sha256 = "164kc3xlfl7agidkj9g1bpjlls0im4m6rs411j36fk7r5nb7wbg2";
-#    };
-#    phases = "installPhase";
-#    
-#    installPhase = ''
-#      mkdir -p $out/
-#      tar -C $out/ -xzf $src
-#    '';
-#  };
-#in
+let
+  my-python-packages = python-packages: with python-packages; [
+#    numpy
+  ]; 
+  python-with-my-packages = python3.withPackages my-python-packages;
+  my-python-packages-deps = [
+#    zlib
+#    tk
+#    tcl
+  ];
+  R-with-my-packages = rWrapper.override{ packages = with rPackages; [ ggplot2 dplyr xts rbenchmark ]; };
+  sc-benchmark = stdenv.mkDerivation {
+    name = "sc-benchmark";
+    
+    #buildInputs = [ git ];
+    
+    src = builtins.fetchGit {
+      rev = "23898d7168d3e51b750fc21951fdfb874ded8d02";
+      url = "https://github.com/FredHutch/sc-benchmark.git";
+      ref = "master";
+    };
+    #src = builtins.fetchFromGitHub {
+    #  owner = "FrankHutch";
+    #  repo = "sc-benchmark";
+    #  rev = "23898d7168d3e51b750fc21951fdfb874ded8d02";
+    #  sha256 = "";
+    #};
+    phases = "installPhase";
+    
+    installPhase = ''
+      mkdir -p $out/
+      mv ./* $out/
+    '';
+  };
+in
 stdenv.mkDerivation {
   name = "sc-benchmarkEnv";
   buildInputs = [
@@ -24,7 +43,21 @@ stdenv.mkDerivation {
     gdb
     git
     
+    # Dependencies
+    my-python-packages-deps
+    python-with-my-packages
+    binutils
+    gfortran
+    openblas
+    tk
+    bzip2
+    pcre2
+    tcl
+    zlib
+    R-with-my-packages
+    
     # Benchmarking
+    sc-benchmark
     
   ];
   src = null;
