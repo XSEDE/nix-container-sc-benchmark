@@ -26,10 +26,13 @@ let
     #  rev = "23898d7168d3e51b750fc21951fdfb874ded8d02";
     #  sha256 = "";
     #};
-    phases = "installPhase";
+    phases = "unpackPhase installPhase";
     
     installPhase = ''
       mkdir -p $out/
+      pwd
+      echo "CHECKING CONTENTS:"
+      ls -la
       mv ./* $out/
     '';
   };
