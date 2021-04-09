@@ -26,7 +26,7 @@ let
     #  rev = "23898d7168d3e51b750fc21951fdfb874ded8d02";
     #  sha256 = "";
     #};
-    phases = "unpackPhase installPhase";
+    phases = "unpackPhase installPhase benchmark";
     
     installPhase = ''
       mkdir -p $out/
@@ -34,6 +34,13 @@ let
       echo "CHECKING CONTENTS:"
       ls -la
       mv ./* $out/
+    '';
+   
+    benchmark = ''
+#        echo `ls $out`
+        . $out/rbenchmark.R
+        mkdir $out/dna
+        . $out/scratch-dna-go 1000 1048576 10 ~/dna
     '';
   };
 in
@@ -58,14 +65,11 @@ stdenv.mkDerivation {
     tcl
     zlib
     R-with-my-packages
+    rPackages.rbenchmark
     
     # Benchmarking
     sc-benchmark
-    
+
   ];
   src = null;
 }
-#  shellHook = ''
-#    export LANG=en_US.UTF-8
-#    ln -sfn ${osu-micro-benchmarks.out}/bin/* /usr/bin
-#  '';
