@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: xsede/centos-nix-base:latest
+From: stebird/stevesscbenchmarkii
 
 
 %runscript
