@@ -69,12 +69,6 @@ stdenv.mkDerivation {
   shellHook = ''
     export LANG=en_US.UTF-8
     ln -sfn ${sc-benchmark.out} /usr/local/sc-benchmark
+    mkdir /usr/local/sc-benchmark/dna
   '';
 }
-
-#    benchmark = ''
-#        echo `ls $out`
-#        . $out/rbenchmark.R
-#        mkdir $out/dna
-#        . $out/scratch-dna-go 1000 1048576 10 ~/dna
-#    '';
