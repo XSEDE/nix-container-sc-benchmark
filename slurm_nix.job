@@ -7,10 +7,5 @@ module purge
 module load singularity
 
 
-singularity run Docker://XSEDE/nix-container-sc-benchmark
+singularity exec docker://XSEDE/nix-container-sc-benchmark /usr/local/sc-benchmark/rbenchmark.R && /usr/local/sc-benchmark/scratch-dna-go 1000 1048576 10 /usr/local/sc-benchmark/dna
 #singularity test shub://XSEDE/nix-container-sc-benchmark 
-
-cd /usr/local/sc-benchmark
-
-./rbenchmark.R
-./scratch-dna-go 1000 1048576 10 ~/dna
