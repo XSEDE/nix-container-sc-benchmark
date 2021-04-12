@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: stebird/stevesscbenchmarkii
+From: xsede/nix-sc-benchmark:testing
 
 
 %runscript
@@ -15,8 +15,8 @@ From: stebird/stevesscbenchmarkii
     fi
 
 %labels
-    Author pete@XCI
-    Version v0.0.1
+    Author steve@XCI
+    Version v0.0.2
 
 %help
     This is a testing container for converting our base CentOS Nix
