@@ -1,5 +1,21 @@
 FROM xsede/centos-nix-base:latest
 
+################## METADATA ######################
+
+LABEL base_image="xsede/centos-nix-base"
+LABEL version="1.0.0"
+LABEL software="sc-benchmakk"
+LABEL software.version="3.8.8"
+LABEL about.summary="Container with the sc-benchmark installed from https://github.com/FredHutch/sc-benchmark.git"
+LABEL about.home="https://github.com/XSEDE/nix-container-sc-benchmark"
+LABEL about.documentation="https://github.com/XSEDE/nix-container-sc-benchmark"
+LABEL about.license_file="https://github.com/XSEDE/nix-container-sc-benchmark"
+LABEL about.license="MIT"
+LABEL about.tags="example-container" 
+LABEL extra.directories="/usr/local/sc-benchmark/"
+LABEL authors="XCRI <help@xsede.org>"
+
+
 SHELL ["/bin/bash", "-c"]
 
 USER root
